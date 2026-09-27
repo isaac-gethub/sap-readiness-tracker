@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SAP Controls, GRC & Security Assurance — Readiness Tracker</title>
+<style>
+  :root{
+    --ink:#1c2531;
+    --ink-soft:#4a5568;
+    --paper:#f7f5f0;
+    --panel:#ffffff;
+    --line:#dcd6c8;
+    --rule:#c9c2ae;
+    --amber:#a9761f;
+    --amber-bg:#f3e6cd;
+    --green:#3d6b4f;
+    --green-bg:#e1ece3;
+    --red:#9c3b3b;
+    --locked:#8a8478;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+    --sans: "IBM Plex Sans", -apple-system, Segoe UI, sans-serif;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:border-box;}
+  html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);}
+  body{
+    height:100%;
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#eae6db; --ink-soft:#b8b2a2; --paper:#171510; --panel:#211f19;
+      --line:#3a352a; --rule:#4a4436; --amber:#e0b45c; --amber-bg:#3a2f16;
+      --green:#8fc7a4; --green-bg:#1c3327; --red:#e08a8a; --locked:#6b6559;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eae6db; --ink-soft:#b8b2a2; --paper:#171510; --panel:#211f19;
+    --line:#3a352a; --rule:#4a4436; --amber:#e0b45c; --amber-bg:#3a2f16;
+    --green:#8fc7a4; --green-bg:#1c3327; --red:#e08a8a; --locked:#6b6559;
+  }
+
+  a{color:inherit;}
+
+  .shell{
+    display:grid;
+    grid-template-columns:260px 1fr;
+    min-height:100%;
+  }
+  @media (max-width:880px){
+    .shell{grid-template-columns:1fr;}
+    .rail{
+      position:sticky; top:0; z-index:5;
+      border-right:none; border-bottom:1px solid var(--line);
+      padding-top:calc(14px + env(safe-area-inset-top,0px));
+    }
+    .rail-list{display:flex; overflow-x:auto; gap:6px; padding-bottom:10px;}
+    .rail-list li{flex:0 0 auto;}
+    .rail-scorecard{display:none;}
+  }
+  @media (max-width:600px){
+    .main{padding:18px 16px 40px;}
+    .week-head h1{font-size:1.4rem;}
+  }
+
+  .rail{
+    background:var(--panel);
+    border-right:1px solid var(--line);
+    padding:22px 16px;
+  }
+  .brand{
+    font-family:var(--serif);
+    font-size:1.02rem;
+    line-height:1.35;
+    margin:0 0 4px;
+    letter-spacing:0.2px;
+  }
+  .brand-sub{
+    font-size:0.72rem;
+    color:var(--ink-soft);
+    margin:0 0 20px;
+  }
+  .rail-scorecard{
+    border:1px solid var(--rule);
+    padding:12px 12px 14px;
+    margin-bottom:20px;
+    background:linear-gradient(180deg, transparent, rgba(0,0,0,0.02));
+  }
+  .rail-scorecard .pct{
+    font-family:var(--serif);
+    font-size:2.1rem;
+    line-height:1;
+  }
+  .rail-scorecard .label{
+    font-size:0.72rem;
+    color:var(--ink-soft);
+    margin-top:4px;
+  }
+  .track{
+    height:5px;
+    background:var(--line);
+    margin-top:10px;
+    position:relative;
+  }
+  .track > span{
+    position:absolute; top:0; left:0; bottom:0;
+    background:var(--green);
+    transition:width .4s ease;
+  }
+  .rail-list{list-style:none; margin:0; padding:0;}
+  .rail-list li{margin-bottom:2px;}
+  .rail-btn{
+    display:flex; align-items:center; gap:10px;
+    width:100%; text-align:left;
+    background:none; border:none; cursor:pointer;
+    padding:8px 10px;
+    font-family:var(--sans);
+    font-size:0.86rem;
+    color:var(--ink);
+    border-left:2px solid transparent;
+  }
+  .rail-btn:hover{background:rgba(0,0,0,0.03);}
+  .rail-btn.active{
+    border-left:2px solid var(--ink);
+    background:rgba(0,0,0,0.04);
+    font-weight:600;
+  }
+  .rail-btn .tag{
+    font-family:var(--mono);
+    font-size:0.68rem;
+    color:var(--ink-soft);
+    width:34px;
+    flex:0 0 auto;
+  }
+  .rail-btn .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--rule); flex:0 0 auto;
+  }
+  .rail-btn.done .dot{background:var(--green);}
+  .rail-btn.inprogress .dot{background:var(--amber);}
+
+  .main{
+    padding:34px 44px 60px;
+    max-width:760px;
+  }
+  .eyebrow-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-family:var(--mono); font-size:0.72rem; color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+  .week-head h1{
+    font-family:var(--serif);
+    font-size:1.9rem;
+    margin:0 0 10px;
+    line-height:1.2;
+  }
+  .week-intro{
+    color:var(--ink-soft);
+    font-size:0.95rem;
+    margin:0 0 22px;
+    max-width:62ch;
+  }
+  .gate{
+    border-left:3px solid var(--amber);
+    background:var(--amber-bg);
+    padding:12px 14px;
+    font-size:0.86rem;
+    margin-bottom:26px;
+    color:var(--ink);
+  }
+  .gate b{font-family:var(--serif); font-style:italic; font-weight:600;}
+
+  .step{
+    border-top:1px solid var(--line);
+    padding:16px 0;
+    display:flex;
+    gap:14px;
+  }
+  .step:last-child{border-bottom:1px solid var(--line);}
+  .step input[type=checkbox]{
+    appearance:none; -webkit-appearance:none;
+    width:19px; height:19px; flex:0 0 auto;
+    border:1.5px solid var(--rule);
+    margin-top:2px;
+    cursor:pointer;
+    position:relative;
+    background:var(--panel);
+  }
+  .step input[type=checkbox]:checked{
+    background:var(--green); border-color:var(--green);
+  }
+  .step input[type=checkbox]:checked::after{
+    content:"";
+    position:absolute; left:5px; top:1px;
+    width:5px; height:10px;
+    border:solid white; border-width:0 2px 2px 0;
+    transform:rotate(40deg);
+  }
+  .step input[type=checkbox]:disabled{
+    opacity:0.4; cursor:not-allowed;
+  }
+  .step-body{flex:1;}
+  .step-title{
+    font-weight:600; font-size:0.95rem;
+    display:flex; align-items:center; gap:8px;
+  }
+  .step-file{
+    font-family:var(--mono); font-size:0.72rem;
+    color:var(--ink-soft); margin-top:3px;
+  }
+  .lock-note{
+    font-size:0.74rem; color:var(--locked);
+    margin-top:4px;
+    font-style:italic;
+  }
+  .step.locked .step-title{color:var(--locked);}
+
+  .portfolio-line{
+    display:flex; justify-content:space-between; align-items:center;
+    border-top:1px solid var(--line);
+    padding:14px 0;
+    font-size:0.92rem;
+  }
+  .portfolio-line:last-child{border-bottom:1px solid var(--line);}
+  .pill{
+    font-family:var(--mono); font-size:0.68rem;
+    padding:3px 8px;
+    border:1px solid var(--rule);
+  }
+  .pill.done{color:var(--green); border-color:var(--green);}
+
+  .note-field{
+    width:100%; min-height:64px;
+    font-family:var(--sans); font-size:0.85rem;
+    border:1px solid var(--line);
+    background:var(--panel); color:var(--ink);
+    padding:10px; margin-top:10px;
+    resize:vertical;
+  }
+
+  .footer-note{
+    margin-top:36px; padding-top:16px;
+    border-top:1px dashed var(--rule);
+    font-size:0.76rem; color:var(--ink-soft);
+    max-width:60ch;
+  }
+
+  .reset-link{
+    background:none; border:none; color:var(--ink-soft);
+    font-size:0.72rem; text-decoration:underline; cursor:pointer;
+    padding:0; margin-top:18px;
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <nav class="rail">
+    <p class="brand">SAP Controls, GRC &amp;<br>Security Assurance</p>
+    <p class="brand-sub">8-Week Job-Readiness Tracker</p>
+
+    <div class="rail-scorecard">
+      <div class="pct" id="railPct">0%</div>
+      <div class="label">Overall readiness</div>
+      <div class="track"><span id="railBar" style="width:0%"></span></div>
+    </div>
+
+    <ul class="rail-list" id="railList"></ul>
+  </nav>
+
+  <main class="main" id="main"></main>
+</div>
+
+<script>
+const WEEKS = [
+  {
+    id: "start",
+    tag: "START",
+    title: "Master User Guide",
+    intro: "The operating manual for the whole program — what each document category is for, which manual is current, and the order to work through everything in.",
+    gate: null,
+    steps: [
+      { key:"read", label:"Read the Master User Guide start to finish", file:"START HERE – SAP Job Readiness Master User Guide.docx" },
+      { key:"manual", label:"Confirm which manual is the current one and open it", file:"Master 8-Week Manual (confirm exact filename with Isaac before relying on it)" }
+    ]
+  },
+  {
+    id:"w1", tag:"WK 01", title:"Security & Controls Foundation",
+    intro:"Scope an engagement, review a live user and role population, and produce your first defensible workpapers.",
+    gate:"Proceed only when you can distinguish a risk indicator from a confirmed exception, and explain what additional evidence is needed.",
+    steps: baseSteps("Week1 Student Lab Workbook.xlsx","Week1 Instructor Answer Key.xlsx")
+  },
+  {
+    id:"w2", tag:"WK 02", title:"GRC ARA, SoD, Ruleset & Mitigation",
+    intro:"Investigate SoD conflicts, challenge the GRC ruleset, and decide between Remove, Redesign, Mitigate or Escalate.",
+    gate:"Proceed only when you can explain why a GRC hit is not automatically a control failure — and why \u201cmanager aware\u201d is not a mitigating control.",
+    steps: baseSteps("Week2 Student GRC Lab Workbook.xlsx","Week2 Instructor Answer Key.xlsx")
+  },
+  {
+    id:"w3", tag:"WK 03", title:"ARM, BRM, EAM & Access Governance",
+    intro:"Review access requests, role lifecycle, and emergency access (firefighter) activity end to end.",
+    gate:"Proceed only when you can trace a request from justification through approval to provisioning, and spot where that chain breaks.",
+    steps: baseSteps("Week3 Student Access Governance Lab.xlsx","Week3 Instructor Answer Key.xlsx")
+  },
+  {
+    id:"w4", tag:"WK 04", title:"SOX, ITGC & Controls Testing",
+    intro:"Perform walkthroughs, test design and operating effectiveness, and evaluate the evidence you're given.",
+    gate:"Proceed only when you can defend a test conclusion using population, sample and evidence — not just the answer.",
+    steps: baseSteps("Week4 Student SOX ITGC Lab Workbook.xlsx","Week4 Instructor Answer Key.xlsx")
+  },
+  {
+    id:"w5", tag:"WK 05", title:"S/4HANA & Fiori Security Assurance",
+    intro:"Assess migration security, Fiori authorization design, and privileged access exposure.",
+    gate:"Proceed only when you can explain a Fiori front-end / backend authorization mismatch to a non-technical stakeholder.",
+    steps: baseSteps("Week5 Student S4 Fiori Lab Workbook.xlsx","Week5 Instructor Answer Key.xlsx")
+  },
+  {
+    id:"w6", tag:"WK 06", title:"QA/QC & Audit Readiness Capstone",
+    intro:"Run an end-to-end independent assurance engagement and defend your conclusions under challenge.",
+    gate:"Proceed only when your findings, remediation validation and executive report would hold up to an external audit challenge.",
+    steps: baseSteps("Week6 Student Capstone Workbook.xlsx","Week6 Instructor QAQC Key.xlsx","Completed QAQC Workpapers","Final Management Report")
+  },
+  {
+    id:"w7", tag:"WK 07", title:"Consultant Deployment Readiness",
+    intro:"Prepare the first-30-days toolkit, interview stories, and deployment materials to actually get placed.",
+    gate:"Proceed only when you can tell three project stories in STAR form without notes.",
+    steps: baseSteps("Week7 Deployment Workbook.xlsx","Weeks 7-8 Assessor Key","First 30 Days & Toolkit","Interview & Project Stories")
+  },
+  {
+    id:"w8", tag:"WK 08", title:"Final Client Simulation",
+    intro:"An unseen-client assessment: analyze evidence, present an executive conclusion, and defend it live under challenge — this is the readiness gate.",
+    gate:"Readiness rule: 85%+ overall, no single competency below 75%. Below that, targeted remediation before calling yourself ready.",
+    steps: baseSteps("Week8 Unseen Client Assessment.xlsx","Final Scorecard & Executive Brief","Completed Assessment")
+  },
+  {
+    id:"career", tag:"WK 09+", title:"Career & Market Readiness",
+    intro:"Resume, LinkedIn, cover letter, outreach and interview materials — used alongside or after the technical weeks.",
+    gate:"Keep every claim consistent with experience you can actually defend in an interview.",
+    steps: [
+      { key:"resume", label:"Resume tailored to SAP Controls/GRC/Security roles", file:"10 Career & Market Readiness" },
+      { key:"linkedin", label:"LinkedIn profile updated to match", file:"10 Career & Market Readiness" },
+      { key:"outreach", label:"Outreach / cover letter templates ready", file:"10 Career & Market Readiness" },
+      { key:"portfolio", label:"Portfolio of completed workpapers assembled", file:"11 Completed Workpapers & Portfolio" }
+    ]
+  }
+];
+
+function baseSteps(studentFile, keyFile, workpaperFolder, extra){
+  const steps = [
+    { key:"student", label:"Complete the student workbook — no answer key open", file: studentFile },
+    { key:"evidence", label:"Capture evidence (screenshots / extracts) as you go", file:"03 Evidence & Screenshots" },
+    { key:"key", label:"Compare your reasoning against the instructor/assessor key", file: keyFile, locksOn:"student" },
+    { key:"workpaper", label:"File the corrected workpaper into your portfolio", file: workpaperFolder || "02 Completed Workpapers" }
+  ];
+  if (extra) steps.push({ key:"extra", label: extra, file: extra });
+  return steps;
+}
+
+const STORE_KEY = "sap_readiness_tracker_v1";
+let state = {};
+try { state = JSON.parse(localStorage.getItem(STORE_KEY) || "{}"); } catch(e) { state = {}; }
+
+function save(){
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+function weekProgress(week){
+  const total = week.steps.length;
+  const done = week.steps.filter(s => state[week.id+":"+s.key]).length;
+  return { total, done, pct: total ? done/total : 0 };
+}
+
+function overallProgress(){
+  let total=0, done=0;
+  WEEKS.forEach(w => { const p = weekProgress(w); total += p.total; done += p.done; });
+  return total ? Math.round((done/total)*100) : 0;
+}
+
+let activeId = WEEKS[1].id;
+
+function render(){
+  renderRail();
+  renderMain();
+}
+
+function renderRail(){
+  const pct = overallProgress();
+  document.getElementById("railPct").textContent = pct + "%";
+  document.getElementById("railBar").style.width = pct + "%";
+
+  const list = document.getElementById("railList");
+  list.innerHTML = "";
+  WEEKS.forEach(w => {
+    const p = weekProgress(w);
+    const li = document.createElement("li");
+    const btn = document.createElement("button");
+    btn.className = "rail-btn" + (w.id===activeId ? " active":"") +
+      (p.done===p.total && p.total>0 ? " done" : (p.done>0 ? " inprogress":""));
+    btn.innerHTML = '<span class="tag">'+w.tag+'</span><span class="dot"></span><span>'+w.title+'</span>';
+    btn.onclick = () => { activeId = w.id; render(); document.getElementById("main").scrollTo(0,0); window.scrollTo(0,0); };
+    li.appendChild(btn);
+    list.appendChild(li);
+  });
+}
+
+function renderMain(){
+  const week = WEEKS.find(w => w.id===activeId);
+  const main = document.getElementById("main");
+  const p = weekProgress(week);
+
+  let html = '';
+  html += '<div class="eyebrow-row"><span>'+week.tag+'</span><span>'+p.done+' / '+p.total+' complete</span></div>';
+  html += '<div class="week-head"><h1>'+week.title+'</h1></div>';
+  html += '<p class="week-intro">'+week.intro+'</p>';
+  if (week.gate){
+    html += '<div class="gate"><b>Completion gate.</b> '+week.gate+'</div>';
+  }
+
+  week.steps.forEach(s => {
+    const checked = !!state[week.id+":"+s.key];
+    let locked = false;
+    if (s.locksOn){
+      locked = !state[week.id+":"+s.locksOn];
+    }
+    html += '<div class="step'+(locked?' locked':'')+'">';
+    html += '<input type="checkbox" data-week="'+week.id+'" data-step="'+s.key+'" '+(checked?'checked':'')+(locked?' disabled':'')+'>';
+    html += '<div class="step-body">';
+    html += '<div class="step-title">'+s.label+'</div>';
+    if (s.file) html += '<div class="step-file">'+s.file+'</div>';
+    if (locked) html += '<div class="lock-note">Locked until the student workbook step above is checked off.</div>';
+    html += '</div></div>';
+  });
+
+  const noteKey = week.id+":note";
+  html += '<textarea class="note-field" placeholder="Notes for this week — open questions, limitations, things to raise with an assessor…" data-note="'+week.id+'">'+(state[noteKey]||"")+'</textarea>';
+
+  html += '<p class="footer-note">This tracker only records checkbox state and notes, in this browser. Your manuals, workbooks and evidence stay exactly where they are in Drive — this just tells you what\u2019s done and keeps the answer key out of reach until it should be.</p>';
+  html += '<button class="reset-link" id="resetBtn">Reset all progress</button>';
+
+  main.innerHTML = html;
+
+  main.querySelectorAll('input[type=checkbox]').forEach(cb => {
+    cb.addEventListener('change', e => {
+      const k = e.target.dataset.week+":"+e.target.dataset.step;
+      state[k] = e.target.checked;
+      if (!e.target.checked){
+        // if a gating step is unchecked, also relock (uncheck) anything that depended on it
+        const w = WEEKS.find(w=>w.id===e.target.dataset.week);
+        w.steps.forEach(s => { if (s.locksOn===e.target.dataset.step) state[w.id+":"+s.key] = false; });
+      }
+      save();
+      render();
+    });
+  });
+
+  const note = main.querySelector('textarea[data-note]');
+  note.addEventListener('input', e => {
+    state[e.target.dataset.note+":note"] = e.target.value;
+    save();
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    if (confirm('Clear all checkbox progress and notes? This cannot be undone.')){
+      state = {};
+      save();
+      render();
+    }
+  });
+}
+
+render();
+</script>
+</body>
+</html>
