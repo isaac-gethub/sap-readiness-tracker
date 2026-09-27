@@ -234,6 +234,20 @@
     font-family:var(--mono); font-size:0.72rem;
     color:var(--ink-soft); margin-top:3px;
   }
+  .step-file a{
+    color:var(--teal);
+    text-decoration:none;
+    border-bottom:1px dotted var(--teal);
+  }
+  .step-file a:hover{border-bottom-style:solid;}
+  .open-folder{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:var(--mono); font-size:0.74rem;
+    color:var(--teal); text-decoration:none;
+    border:1px solid var(--teal); padding:5px 10px;
+    margin-bottom:18px;
+  }
+  .open-folder:hover{background:var(--teal-bg);}
   .lock-note{
     font-size:0.74rem; color:var(--locked);
     margin-top:4px;
@@ -303,70 +317,80 @@ const WEEKS = [
     id: "start",
     tag: "START",
     title: "Master User Guide",
+    folder: "https://drive.google.com/drive/folders/1jSgBjACZa9WWk8IV2qvJ5SASI67fvg0n",
     intro: "The operating manual for the whole program — what each document category is for, which manual is current, and the order to work through everything in.",
     gate: null,
     steps: [
       { key:"read", label:"Read the Master User Guide start to finish", file:"START HERE – SAP Job Readiness Master User Guide.docx" },
-      { key:"manual", label:"Confirm which manual is the current one and open it", file:"Master 8-Week Manual (confirm exact filename with Isaac before relying on it)" }
+      { key:"manual", label:"Confirm which manual is the current one and open it", file:"SAP Job Readiness 8 Week FINAL Manual.docx" }
     ]
   },
   {
     id:"w1", tag:"WK 01", title:"Security & Controls Foundation",
+    folder:"https://drive.google.com/drive/folders/1tmPGrt6g2DnTNXLE1Fpe_H9hwD_xoLUf",
     intro:"Scope an engagement, review a live user and role population, and produce your first defensible workpapers.",
     gate:"Proceed only when you can distinguish a risk indicator from a confirmed exception, and explain what additional evidence is needed.",
     steps: baseSteps("Week1 Student Lab Workbook.xlsx","Week1 Instructor Answer Key.xlsx")
   },
   {
     id:"w2", tag:"WK 02", title:"GRC ARA, SoD, Ruleset & Mitigation",
+    folder:"https://drive.google.com/drive/folders/17csOLWWYHQbLTlzZ1afdQv-E2wUXYySy",
     intro:"Investigate SoD conflicts, challenge the GRC ruleset, and decide between Remove, Redesign, Mitigate or Escalate.",
     gate:"Proceed only when you can explain why a GRC hit is not automatically a control failure — and why \u201cmanager aware\u201d is not a mitigating control.",
     steps: baseSteps("Week2 Student GRC Lab Workbook.xlsx","Week2 Instructor Answer Key.xlsx")
   },
   {
     id:"w3", tag:"WK 03", title:"ARM, BRM, EAM & Access Governance",
+    folder:"https://drive.google.com/drive/folders/1mjaABYIJXPuw_JY72P9gd7ODamropX9e",
     intro:"Review access requests, role lifecycle, and emergency access (firefighter) activity end to end.",
     gate:"Proceed only when you can trace a request from justification through approval to provisioning, and spot where that chain breaks.",
     steps: baseSteps("Week3 Student Access Governance Lab.xlsx","Week3 Instructor Answer Key.xlsx")
   },
   {
     id:"w4", tag:"WK 04", title:"SOX, ITGC & Controls Testing",
+    folder:"https://drive.google.com/drive/folders/1_3evN64dA5hGOZcSkq4rUtva9d10wCHM",
     intro:"Perform walkthroughs, test design and operating effectiveness, and evaluate the evidence you're given.",
     gate:"Proceed only when you can defend a test conclusion using population, sample and evidence — not just the answer.",
     steps: baseSteps("Week4 Student SOX ITGC Lab Workbook.xlsx","Week4 Instructor Answer Key.xlsx")
   },
   {
     id:"w5", tag:"WK 05", title:"S/4HANA & Fiori Security Assurance",
+    folder:"https://drive.google.com/drive/folders/17kd_MaoHg7oo38dFeEmwSnXwaX4FRJ-l",
     intro:"Assess migration security, Fiori authorization design, and privileged access exposure.",
     gate:"Proceed only when you can explain a Fiori front-end / backend authorization mismatch to a non-technical stakeholder.",
     steps: baseSteps("Week5 Student S4 Fiori Lab Workbook.xlsx","Week5 Instructor Answer Key.xlsx")
   },
   {
     id:"w6", tag:"WK 06", title:"QA/QC & Audit Readiness Capstone",
+    folder:"https://drive.google.com/drive/folders/1uswwU97T5KwuIWhv87d7fRO1HXwyQy-q",
     intro:"Run an end-to-end independent assurance engagement and defend your conclusions under challenge.",
     gate:"Proceed only when your findings, remediation validation and executive report would hold up to an external audit challenge.",
     steps: baseSteps("Week6 Student Capstone Workbook.xlsx","Week6 Instructor QAQC Key.xlsx","Completed QAQC Workpapers","Final Management Report")
   },
   {
     id:"w7", tag:"WK 07", title:"Consultant Deployment Readiness",
+    folder:"https://drive.google.com/drive/folders/1oiKaUrDH7Dtc5nYGjMjDFk3wFMooJlQx",
     intro:"Prepare the first-30-days toolkit, interview stories, and deployment materials to actually get placed.",
     gate:"Proceed only when you can tell three project stories in STAR form without notes.",
     steps: baseSteps("Week7 Deployment Workbook.xlsx","Weeks 7-8 Assessor Key","First 30 Days & Toolkit","Interview & Project Stories")
   },
   {
     id:"w8", tag:"WK 08", title:"Final Client Simulation",
+    folder:"https://drive.google.com/drive/folders/1T9nqwy48QxwOsWAptJQndLEFTtZ0VOrV",
     intro:"An unseen-client assessment: analyze evidence, present an executive conclusion, and defend it live under challenge — this is the readiness gate.",
     gate:"Readiness rule: 85%+ overall, no single competency below 75%. Below that, targeted remediation before calling yourself ready.",
     steps: baseSteps("Week8 Unseen Client Assessment.xlsx","Final Scorecard & Executive Brief","Completed Assessment")
   },
   {
     id:"career", tag:"WK 09+", title:"Career & Market Readiness",
+    folder:"https://drive.google.com/drive/folders/1MYQo-F6wA3mcU3vwJZvAHNm2X_Kt71T8",
     intro:"Resume, LinkedIn, cover letter, outreach and interview materials — used alongside or after the technical weeks.",
     gate:"Keep every claim consistent with experience you can actually defend in an interview.",
     steps: [
       { key:"resume", label:"Resume tailored to SAP Controls/GRC/Security roles", file:"10 Career & Market Readiness" },
       { key:"linkedin", label:"LinkedIn profile updated to match", file:"10 Career & Market Readiness" },
       { key:"outreach", label:"Outreach / cover letter templates ready", file:"10 Career & Market Readiness" },
-      { key:"portfolio", label:"Portfolio of completed workpapers assembled", file:"11 Completed Workpapers & Portfolio" }
+      { key:"portfolio", label:"Portfolio of completed workpapers assembled", file:"11 Completed Workpapers & Portfolio", folderOverride:"https://drive.google.com/drive/folders/1OB3NIZaWDFHmGWrBUuQXv5-K4oLfu9Zo" }
     ]
   }
 ];
@@ -438,6 +462,9 @@ function renderMain(){
   html += '<div class="eyebrow-row"><span>'+week.tag+'</span><span>'+p.done+' / '+p.total+' complete</span></div>';
   html += '<div class="week-head"><h1>'+week.title+'</h1></div>';
   html += '<p class="week-intro">'+week.intro+'</p>';
+  if (week.folder){
+    html += '<a class="open-folder" href="'+week.folder+'" target="_blank" rel="noopener">Open this week\u2019s folder in Drive ↗</a>';
+  }
   if (week.gate){
     html += '<div class="gate"><b>Completion gate.</b> '+week.gate+'</div>';
   }
@@ -452,7 +479,14 @@ function renderMain(){
     html += '<input type="checkbox" data-week="'+week.id+'" data-step="'+s.key+'" '+(checked?'checked':'')+(locked?' disabled':'')+'>';
     html += '<div class="step-body">';
     html += '<div class="step-title">'+s.label+'</div>';
-    if (s.file) html += '<div class="step-file">'+s.file+'</div>';
+    if (s.file){
+      const linkUrl = s.folderOverride || week.folder;
+      if (linkUrl){
+        html += '<div class="step-file"><a href="'+linkUrl+'" target="_blank" rel="noopener">'+s.file+' ↗</a></div>';
+      } else {
+        html += '<div class="step-file">'+s.file+'</div>';
+      }
+    }
     if (locked) html += '<div class="lock-note">Locked until the student workbook step above is checked off.</div>';
     html += '</div></div>';
   });
