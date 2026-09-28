@@ -321,8 +321,8 @@ const WEEKS = [
     intro: "The operating manual for the whole program — what each document category is for, which manual is current, and the order to work through everything in.",
     gate: null,
     steps: [
-      { key:"read", label:"Read the Master User Guide start to finish", file:"START HERE – SAP Job Readiness Master User Guide.docx" },
-      { key:"manual", label:"Confirm which manual is the current one and open it", file:"SAP Job Readiness 8 Week FINAL Manual.docx" }
+      { key:"read", label:"Read the Master User Guide start to finish", file:"START HERE – SAP Job Readiness Master User Guide.docx", fileUrl:"https://docs.google.com/document/d/1UnYOZGJ2iGBlyMM07DDtAEZbrANJy39T/edit?usp=drivesdk" },
+      { key:"manual", label:"Confirm which manual is the current one and open it", file:"SAP Job Readiness 8 Week FINAL Manual.docx", fileUrl:"https://docs.google.com/document/d/10vqWn9idzZMGK7VOH7SVgNhsiHgs3wPL/edit?usp=drivesdk" }
     ]
   },
   {
@@ -351,28 +351,28 @@ const WEEKS = [
     folder:"https://drive.google.com/drive/folders/1_3evN64dA5hGOZcSkq4rUtva9d10wCHM",
     intro:"Perform walkthroughs, test design and operating effectiveness, and evaluate the evidence you're given.",
     gate:"Proceed only when you can defend a test conclusion using population, sample and evidence — not just the answer.",
-    steps: baseSteps("Week4 Student SOX ITGC Lab Workbook.xlsx","Week4 Instructor Answer Key.xlsx")
+    steps: baseSteps("Week4 Student SOX ITGC Lab.xlsx","Week4 Instructor Answer Key.xlsx")
   },
   {
     id:"w5", tag:"WK 05", title:"S/4HANA & Fiori Security Assurance",
     folder:"https://drive.google.com/drive/folders/17kd_MaoHg7oo38dFeEmwSnXwaX4FRJ-l",
     intro:"Assess migration security, Fiori authorization design, and privileged access exposure.",
     gate:"Proceed only when you can explain a Fiori front-end / backend authorization mismatch to a non-technical stakeholder.",
-    steps: baseSteps("Week5 Student S4 Fiori Lab Workbook.xlsx","Week5 Instructor Answer Key.xlsx")
+    steps: baseSteps("Week5 Student S4 Fiori Security Lab.xlsx","Week5 Instructor Answer Key.xlsx")
   },
   {
     id:"w6", tag:"WK 06", title:"QA/QC & Audit Readiness Capstone",
     folder:"https://drive.google.com/drive/folders/1uswwU97T5KwuIWhv87d7fRO1HXwyQy-q",
     intro:"Run an end-to-end independent assurance engagement and defend your conclusions under challenge.",
     gate:"Proceed only when your findings, remediation validation and executive report would hold up to an external audit challenge.",
-    steps: baseSteps("Week6 Student Capstone Workbook.xlsx","Week6 Instructor QAQC Key.xlsx","Completed QAQC Workpapers","Final Management Report")
+    steps: baseSteps("Week6 Student QAQC Capstone.xlsx","Week6 Instructor Answer Key.xlsx","Completed QAQC Workpapers","Final Management Report")
   },
   {
     id:"w7", tag:"WK 07", title:"Consultant Deployment Readiness",
     folder:"https://drive.google.com/drive/folders/1oiKaUrDH7Dtc5nYGjMjDFk3wFMooJlQx",
     intro:"Prepare the first-30-days toolkit, interview stories, and deployment materials to actually get placed.",
     gate:"Proceed only when you can tell three project stories in STAR form without notes.",
-    steps: baseSteps("Week7 Deployment Workbook.xlsx","Weeks 7-8 Assessor Key","First 30 Days & Toolkit","Interview & Project Stories")
+    steps: baseSteps("Week7 Consultant Deployment Readiness.xlsx","Weeks 7-8 Assessor Key","First 30 Days & Toolkit","Interview & Project Stories")
   },
   {
     id:"w8", tag:"WK 08", title:"Final Client Simulation",
@@ -387,13 +387,36 @@ const WEEKS = [
     intro:"Resume, LinkedIn, cover letter, outreach and interview materials — used alongside or after the technical weeks.",
     gate:"Keep every claim consistent with experience you can actually defend in an interview.",
     steps: [
-      { key:"resume", label:"Resume tailored to SAP Controls/GRC/Security roles", file:"10 Career & Market Readiness" },
-      { key:"linkedin", label:"LinkedIn profile updated to match", file:"10 Career & Market Readiness" },
-      { key:"outreach", label:"Outreach / cover letter templates ready", file:"10 Career & Market Readiness" },
-      { key:"portfolio", label:"Portfolio of completed workpapers assembled", file:"11 Completed Workpapers & Portfolio", folderOverride:"https://drive.google.com/drive/folders/1OB3NIZaWDFHmGWrBUuQXv5-K4oLfu9Zo" }
+      { key:"resume", label:"Resume tailored to SAP Controls/GRC/Security roles", file:"01 Master Resume - SAP Controls GRC Security Assurance Architect.docx", fileUrl:"https://docs.google.com/document/d/1MdKldktFypKG_yI4BwcAMME1ypyhRPMB/edit?usp=drivesdk" },
+      { key:"linkedin", label:"LinkedIn profile updated to match", file:"04 LinkedIn Profile Updated.docx", fileUrl:"https://docs.google.com/document/d/1U4cjtSKVsu8SEBKbJB1ZKlROlBAkwQSN/edit?usp=drivesdk" },
+      { key:"outreach", label:"Outreach / cover letter templates ready", file:"05 Master Cover Letter - Controls GRC Assurance.docx", fileUrl:"https://docs.google.com/document/d/1zyrJobhzR1ALEcuWyWtfL-Of_Elk2Fee/edit?usp=drivesdk" },
+      { key:"portfolio", label:"Portfolio of completed workpapers assembled", file:"11 Completed Workpapers & Portfolio", fileUrl:"https://drive.google.com/drive/folders/1OB3NIZaWDFHmGWrBUuQXv5-K4oLfu9Zo", folderOverride:"https://drive.google.com/drive/folders/1OB3NIZaWDFHmGWrBUuQXv5-K4oLfu9Zo" }
     ]
   }
 ];
+
+const DIRECT_LINKS = {
+  "START HERE – SAP Job Readiness Master User Guide.docx":"https://docs.google.com/document/d/1UnYOZGJ2iGBlyMM07DDtAEZbrANJy39T/edit?usp=drivesdk",
+  "SAP Job Readiness 8 Week FINAL Manual.docx":"https://docs.google.com/document/d/10vqWn9idzZMGK7VOH7SVgNhsiHgs3wPL/edit?usp=drivesdk",
+  "Week1 Student Lab Workbook.xlsx":"https://docs.google.com/spreadsheets/d/1V7fw1ZLbNwmwvScy22M4npQyPcP-S9hw/edit?usp=drivesdk",
+  "Week1 Instructor Answer Key.xlsx":"https://docs.google.com/spreadsheets/d/1QngNGJOO-iypA5z7fpj1-UgXkbWUzA2A/edit?usp=drivesdk",
+  "Week2 Student GRC Lab Workbook.xlsx":"https://docs.google.com/spreadsheets/d/1PuOfgPlOdLdKlWE8BIrGs5ZGm0tKBD4M/edit?usp=drivesdk",
+  "Week2 Instructor Answer Key.xlsx":"https://docs.google.com/spreadsheets/d/166CIvpHq8lto1nj-raTFXixSNX0OaFO1/edit?usp=drivesdk",
+  "Week3 Student Access Governance Lab.xlsx":"https://docs.google.com/spreadsheets/d/1RqqsQRa-_mn7bbiHwszLvVWgU4cLpSjI/edit?usp=drivesdk",
+  "Week3 Instructor Answer Key.xlsx":"https://docs.google.com/spreadsheets/d/1cjoMnKBBD18o_HpXps-7XCnLa8GNtHKC/edit?usp=drivesdk",
+  "Week4 Student SOX ITGC Lab.xlsx":"https://docs.google.com/spreadsheets/d/19I89XRiOTN7pXYIzv95_ROcyFyPbk2eM/edit?usp=drivesdk",
+  "Week4 Instructor Answer Key.xlsx":"https://docs.google.com/spreadsheets/d/1FOvMUYgt8EHmIsZp19w3G8d9RAkKjlpU/edit?usp=drivesdk",
+  "Week5 Student S4 Fiori Security Lab.xlsx":"https://docs.google.com/spreadsheets/d/1gMnAHcdD5ApdMDVsAt5zbF5XVnk1VfLC/edit?usp=drivesdk",
+  "Week5 Instructor Answer Key.xlsx":"https://docs.google.com/spreadsheets/d/1K3p9814D4tAzNhXOO_0lPfzszYCMYbVO/edit?usp=drivesdk",
+  "Week6 Student QAQC Capstone.xlsx":"https://docs.google.com/spreadsheets/d/1BrtHCSmmXN7ZQhKC7F7Q5tlAxNmW_r9Z/edit?usp=drivesdk",
+  "Week6 Instructor Answer Key.xlsx":"https://docs.google.com/spreadsheets/d/12CQIxkDuZJgWHvCDNqdCf_UDgYyB3A0u/edit?usp=drivesdk",
+  "Week7 Consultant Deployment Readiness.xlsx":"https://docs.google.com/spreadsheets/d/1y9lj_rPBeEgGyb1vy2Z_5g-nx22xrpX8/edit?usp=drivesdk",
+  "Weeks 7-8 Assessor Key":"https://docs.google.com/spreadsheets/d/1QNyEw7tSW1JgnKtGWpEE-AySrqwJyfWV/edit?usp=drivesdk",
+  "Week8 Unseen Client Assessment.xlsx":"https://docs.google.com/spreadsheets/d/1pM5lVB8o3IJiqPK0OlUwtWkBJa8dC2mb/edit?usp=drivesdk",
+  "01 Master Resume - SAP Controls GRC Security Assurance Architect.docx":"https://docs.google.com/document/d/1MdKldktFypKG_yI4BwcAMME1ypyhRPMB/edit?usp=drivesdk",
+  "04 LinkedIn Profile Updated.docx":"https://docs.google.com/document/d/1U4cjtSKVsu8SEBKbJB1ZKlROlBAkwQSN/edit?usp=drivesdk",
+  "05 Master Cover Letter - Controls GRC Assurance.docx":"https://docs.google.com/document/d/1zyrJobhzR1ALEcuWyWtfL-Of_Elk2Fee/edit?usp=drivesdk"
+};
 
 function baseSteps(studentFile, keyFile, workpaperFolder, extra){
   const steps = [
@@ -480,7 +503,7 @@ function renderMain(){
     html += '<div class="step-body">';
     html += '<div class="step-title">'+s.label+'</div>';
     if (s.file){
-      const linkUrl = s.folderOverride || week.folder;
+      const linkUrl = DIRECT_LINKS[s.file] || s.fileUrl || s.folderOverride || week.folder;
       if (linkUrl){
         html += '<div class="step-file"><a href="'+linkUrl+'" target="_blank" rel="noopener">'+s.file+' ↗</a></div>';
       } else {
